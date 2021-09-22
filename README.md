@@ -1,2 +1,3 @@
 # ts-quiz
-Created with CodeSandbox
+React Quiz App.
+[Typescript]
