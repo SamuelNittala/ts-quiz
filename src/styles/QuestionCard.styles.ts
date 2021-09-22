@@ -1,22 +1,44 @@
 import styled from "styled-components";
 
-type props = {
-  onClick: any;
-  value: string;
-  disabled: string[];
-  isCorrect: boolean;
+export const Wrapper = styled.div`
+  max-width: 1100px;
+  background: #ebfeff;
+  border-radius: 10px;
+  border: 2px solid #0085a3;
+  padding: 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  p {
+    font-size: 1rem;
+  }
+`;
+type ButtonWrapperProps = {
+  correct: boolean;
+  userClicked: boolean;
 };
 
-const color = (props: props) => (props.isCorrect ? "Green" : "White");
-
-export const AnswerButton = styled.button`
-  color: palevioletred;
-  width: 200px;
-  align-self: center;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 10px;
-  background-color: ${color};
+export const ButtonWrapper = styled.div<ButtonWrapperProps>`
+  transition: all 0.3s ease;
+  :hover {
+    opacity: 0.8;
+  }
+  button {
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.8rem;
+    width: 100%;
+    height: 40px;
+    margin: 5px 0;
+    background: ${({ correct, userClicked }) =>
+      correct
+        ? "linear-gradient(90deg, #56FFA4, #59BC86)"
+        : !correct && userClicked
+        ? "linear-gradient(90deg, #FF5656, #C16868)"
+        : "linear-gradient(90deg, #56ccff, #6eafb4)"};
+    border: 3px solid #ffffff;
+    box-shadow: 1px 2px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #fff;
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25);
+  }
 `;
