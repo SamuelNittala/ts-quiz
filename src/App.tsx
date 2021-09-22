@@ -3,7 +3,7 @@ import QuestionCard from "./components/QuestionCard";
 import { fetchQuestions, Difficulty, QuestionState, Question } from "./API";
 import * as React from "react";
 
-const TOTAL_QUESTIONS = 10;
+const TOTAL_QUESTIONS: number = 10;
 
 type AnswerObject = {
   question: string;
@@ -36,15 +36,37 @@ const App = () => {
     setNumber(0);
     setLoading(false);
   };
-  const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {};
-  const nextQuestion = () => {};
+  const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!gameOver) {
+      const answer = event.currentTarget.value;
+      console.log(answer);
+      const correct = questions[number].correct_answer === answer;
+      if (correct) {
+        setScore((prev) => prev + 1);
+      }
+      const answerObject: AnswerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer
+      };
+      setUserAnswers((prev) => [...prev, answerObject]);
+    }
+  };
+  const nextQuestion = () => {
+    setNumber((prev) => prev + 1);
+    console.log(number);
+    if (number === TOTAL_QUESTIONS - 1) {
+      setGameOver(true);
+    }
+  };
   return (
     <div className="App">
       <h2>Quiz</h2>
       {gameOver || number === TOTAL_QUESTIONS ? (
         <button onClick={startTrivia}> START </button>
       ) : null}
-      {!gameOver ? <p className="score"> Score </p> : null}
+      {!gameOver ? <p className="score"> Score : {score} </p> : null}
       {loading && <p> Loading.. </p>}
       {!loading && !gameOver && (
         <QuestionCard
